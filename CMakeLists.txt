@@ -27,6 +27,7 @@ if(PLATFORM_ANDROID)
     COMMENT "Running Gradle build..."
   )
 else()
+  add_subdirectory("nova/external/stb")
   add_subdirectory("nova" "libnova")
 
   set(EXE_TARGET "nova_exe")

@@ -60,7 +60,7 @@ set(LIB_TARGET "nova")
 set(LIB_TARGET "${LIB_TARGET}" PARENT_SCOPE)
 
 find_package(tinyxml2 REQUIRED)
-find_package(Stb REQUIRED)
+#find_package(Stb REQUIRED)
 
 configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/src/version_in.hpp"
@@ -87,6 +87,7 @@ if(PLATFORM_LINUX)
   endif()
   add_library(${LIB_TARGET} ${CPP_SOURCES})
   target_link_libraries(${LIB_TARGET} PUBLIC Vulkan::shaderc_combined)
+
 elseif(PLATFORM_ANDROID)
   find_package(Vulkan REQUIRED)
   set(COMPILE_FLAGS -Wextra -Wall)
@@ -142,14 +143,20 @@ elseif(PLATFORM_IOS)
   target_link_libraries(${LIB_TARGET} PUBLIC Vulkan::shaderc_combined)
 endif()
 
+target_link_libraries(${LIB_TARGET} PUBLIC stb)
 target_include_directories(${LIB_TARGET} PUBLIC
   "${PROJECT_BINARY_DIR}/include" # Location of version.hpp
   "${CMAKE_CURRENT_SOURCE_DIR}/src"
-  "${Stb_INCLUDE_DIR}"
+
 )
 
 target_link_libraries(${LIB_TARGET} PUBLIC
+  Vulkan::shaderc_combined
   Vulkan::Vulkan
+  glslang
+  SPIRV-Tools
+  SPIRV-Tools-opt
+  stb
   tinyxml2::tinyxml2
 )
 

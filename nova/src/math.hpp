@@ -1,5 +1,5 @@
 #pragma once
-
+#include <cstdint>
 #include "exception.hpp"
 #include <algorithm>
 #include <cmath>
